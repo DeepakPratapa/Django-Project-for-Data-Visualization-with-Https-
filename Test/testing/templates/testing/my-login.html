@@ -1,0 +1,17 @@
+<html>
+
+   <h1> Login here </h1>
+
+   <form method="POST" autocomplete="off" >
+    <!-- We are using the method POST , Add the csrf token
+     as For evey POST request we need to pass a csrf token-->
+    {% csrf_token %}
+
+    {{loginform.as_p}}
+
+    <input type="submit" value ="Login" />
+
+   </form>
+
+
+</html>

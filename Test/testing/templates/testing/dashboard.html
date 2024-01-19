@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <header class="bg-dark text-white text-center py-3">
+        <h1>Dashboard</h1>
+    </header>
+
+    <main class="container mt-4">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">Welcome to the Dashboard!</h2>
+                <p class="card-text">Your content goes here. You can create a word game:</p>
+
+                <a href="{% url 'visual' %}"class="btn btn-primary">Visualize</a>
+
+                
+                <!-- User input and word shuffling -->
+                <div class="mb-3">
+                    <label for="userWord" class="form-label">Enter a word:</label>
+                    <input type="text" class="form-control" id="userWord">
+                </div>
+                <p id="shuffledWord">Shuffled Word: <span id="displayShuffledWord"></span></p>
+                <button class="btn btn-primary" onclick="shuffleWord()">Shuffle Word</button>
+                
+                <a href="{% url 'user-logout' %}" class="btn btn-danger mt-3">Logout</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Include Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function logout() {
+            // Redirect to the logout URL
+            window.location.href = "{% url 'user-logout' %}";
+        }
+
+        // Word game logic
+        let userWord = "";
+        let shuffledUserWord = "";
+
+        function shuffleWord() {
+            // Get the user input
+            userWord = document.getElementById('userWord').value.trim().toLowerCase();
+
+            if (userWord.length === 0) {
+                alert('Please enter a word.');
+                return;
+            }
+
+            // Convert the word to an array of characters
+            const wordArray = userWord.split('');
+            
+            // Shuffle the array
+            for (let i = wordArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [wordArray[i], wordArray[j]] = [wordArray[j], wordArray[i]];
+            }
+
+            // Update the shuffledUserWord variable and display it
+            shuffledUserWord = wordArray.join('');
+            document.getElementById('displayShuffledWord').textContent = shuffledUserWord;
+        }
+    </script>
+
+</body>
+</html>
